@@ -1,0 +1,51 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --text: #15050e;
+    --background: #fefbfd;
+    --primary: #cf3a94;
+    --secondary: #a2e490;
+    --accent: #67da9f;
+  }
+  .dark {
+    --text: #faeaf3;
+    --background: #040103;
+    --primary: #c53089;
+    --secondary: #2d6f1b;
+    --accent: #25985c;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+.hidescroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hidescroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.light .boxshadow {
+  box-shadow: inset 11px 0px 15px 0px rgba(0, 0, 0, 0.1),
+    0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+}
+.dark .boxshadow {
+  box-shadow: inset 5px 0px 15px 0px rgba(189, 189, 189, 0.1),
+    0px 0px 10px 0px rgba(191, 191, 191, 0.1);
+}
+.poppins {
+  font-family: "Poppins", sans-serif;
+}
