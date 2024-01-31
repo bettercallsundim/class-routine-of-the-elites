@@ -1,26 +1,28 @@
 {
-  "name": "kittycat",
+  "name": "servers",
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node .",
-    "dev": "nodemon ."
+    "dev": "nodemon app.js",
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@apollo/server": "^4.9.5",
-    "bcrypt": "^5.1.1",
-    "cookie-parser": "^1.4.6",
+    "bcrypt": "^5.1.0",
+    "chrome-aws-lambda": "^10.1.0",
+    "cloudinary": "^1.37.0",
     "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "graphql": "^16.8.1",
-    "graphql-tag": "^2.12.6",
+    "express-fileupload": "^1.4.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.0.3"
+    "mongodb": "^4.13.0",
+    "mongoose": "^7.2.1",
+    "multer": "^1.4.5-lts.1",
+    "puppeteer": "^21.6.1",
+    "puppeteer-core": "^21.6.1"
   }
 }

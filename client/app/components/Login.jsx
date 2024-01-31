@@ -1,43 +1,25 @@
 "use client";
 
-import { getDataFromLocal, setDataToLocal } from "@/utils/localStorage";
-import { gql, useMutation } from "@apollo/client";
+import { getDataFromLocal } from "@/utils/localStorage";
 import { GoogleLogin } from "@react-oauth/google";
+import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { setToken, setUser } from "../redux/globalSlice";
+import { setUser } from "../redux/globalSlice";
 export default function Login() {
   const dispatch = useDispatch();
   const [tokenData, setTokenData] = useState(null);
   const userFromState = useSelector((state) => state.globalSlice.user);
   const router = useRouter();
-  const addUser = gql`
-    mutation signIn(
-      $email: String!
-      $googleId: String!
-      $name: String!
-      $picture: String!
-    ) {
-      signIn(
-        name: $name
-        googleId: $googleId
-        picture: $picture
-        email: $email
-      ) {
-        token
-        _id
-      }
-    }
-  `;
-
-  const [signIn] = useMutation(addUser, {
-    onError: (err) => {
-      console.log(err);
-    },
-  });
+  const continueGoogle = async (data) => {
+    const response = await axios.post(
+      "http://localhost:4000/user/signup",
+      data
+    );
+  };
   useEffect(() => {
     const { token: gotToken } = getDataFromLocal("token");
     if (gotToken) {
@@ -62,39 +44,8 @@ export default function Login() {
               notify();
               const decoded = jwtDecode(credential);
               dispatch(setUser(decoded));
-              const { email, name, picture, sub: id } = decoded;
-              signIn({
-                variables: {
-                  name,
-                  email,
-                  picture,
-                  googleId: id,
-                },
-                update: (
-                  cache,
-                  {
-                    data: {
-                      signIn: { token: newToken, _id },
-                    },
-                  }
-                ) => {
-                  dispatch(setToken({ token: newToken }));
-                  setTokenData(newToken);
-                  setDataToLocal("token", { token: newToken });
-                  setDataToLocal("user", {
-                    name,
-                    email,
-                    picture,
-                    googleId: id,
-                    _id: _id,
-                  });
-
-                  dispatch(
-                    setUser({ name, email, picture, googleId: id, _id: _id })
-                  );
-                },
-              });
-
+              const { email, name, picture } = decoded;
+              continueGoogle({ name, email, picture });
               router.push("/feed");
             }}
             onError={() => {

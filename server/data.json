@@ -1,0 +1,195 @@
+[
+  {
+    "section": "A",
+    "routine": [
+      {
+        "day": "Monday",
+        "classes": [
+          {
+            "tname": "JA",
+            "subName": "CSE",
+            "time": "9:00am - 10:30am",
+            "room": 507
+          },
+          {
+            "tname": "AA",
+            "subName": "ELC",
+            "time": "12:10 pm - 01:40 pm",
+            "room": 513
+          }
+        ]
+      },
+      {
+        "day": "Tuesday",
+        "classes": [
+          {
+            "tname": "JA",
+            "subName": "CSE",
+            "time": "9:00am - 10:30am",
+            "room": 505
+          },
+          {
+            "tname": "MAA",
+            "subName": "CEL",
+            "time": "10:35am - 12:05 pm",
+            "room": 406
+          },
+          {
+            "tname": "AA",
+            "subName": "ELC",
+            "time": "12:10am - 01:40 pm",
+            "room": 507
+          }
+        ]
+      },
+      {
+        "day": "Wednesday",
+        "classes": [
+          {
+            "tname": "JA",
+            "subName": "CSE",
+            "time": "12:10 pm - 01:40 pm",
+            "room": 507
+          },
+          {
+            "tname": "RR",
+            "subName": "MAT",
+            "time": "02:10 pm - 03:40 pm",
+            "room": 507
+          }
+        ]
+      },
+      {
+        "day": "Thursday",
+        "classes": [
+          {
+            "tname": "RR",
+            "subName": "MAT",
+            "time": "02:05 pm - 03:35 pm",
+            "room": 508
+          },
+          {
+            "tname": "MAA",
+            "subName": "CEL",
+            "time": "03:40 pm - 05:10 pm",
+            "room": 508
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "section": "B",
+    "routine": [
+      {
+        "day": "Sunday",
+        "classes": [
+          {
+            "tname": "RA",
+            "subName": "CSE-122",
+            "time": "10:35am - 12:05pm",
+            "room": 505
+          },
+          {
+            "tname": "TBA",
+            "subName": "HEB-121",
+            "time": "12:10pm - 01:40pm",
+            "room": 408
+          },
+          {
+            "tname": "SS",
+            "subName": "BNG",
+            "time": "02:10pm - 03:40pm",
+            "room": 509
+          }
+        ]
+      },
+      {
+        "day": "Monday",
+        "classes": [
+          {
+            "tname": "TBA",
+            "subName": "PHY-111",
+            "time": "09:00am - 10:30am",
+            "room": 413
+          },
+          {
+            "tname": "AA",
+            "subName": "ELC-II",
+            "time": "10:35am - 12:05pm",
+            "room": 509
+          },
+          {
+            "tname": "RA",
+            "subName": "CSE-121",
+            "time": "12:10am - 01:40pm",
+            "room": 509
+          }
+        ]
+      },
+      {
+        "day": "Tuesday",
+        "classes": [
+          {
+            "tname": "BKD",
+            "subName": "CEL-121",
+            "time": "09:00am - 10:30am",
+            "room": 509
+          },
+          {
+            "tname": "RA",
+            "subName": "CSE-121",
+            "time": "10:35am - 12:05pm",
+            "room": 513
+          },
+          {
+            "tname": "AA",
+            "subName": "ELC-II",
+            "time": "12:10pm - 01:40pm",
+            "room": 509
+          }
+        ]
+      },
+      {
+        "day": "Wednesday",
+        "classes": [
+          {
+            "tname": "BKD",
+            "subName": "CEL-121",
+            "time": "09:00am - 10:30am",
+            "room": 513
+          },
+          {
+            "tname": "SKB",
+            "subName": "PHY-112",
+            "time": "10:35am - 12:05pm",
+            "room": 511
+          },
+          {
+            "tname": "SS",
+            "subName": "BNG-111",
+            "time": "12:10pm - 01:40pm",
+            "room": 513
+          }
+        ]
+      },
+      {
+        "day": "Thursday",
+        "classes": [
+          {
+            "tname": "TBA",
+            "subName": "HEB-121",
+            "time": "12:05pm - 01:35pm",
+            "room": 406
+          },
+          {
+            "tname": "TBA",
+            "subName": "PHY-111",
+            "time": "02:05pm - 03:40pm",
+            "room": 406
+          }
+        ]
+      }
+    ]
+  }
+]
