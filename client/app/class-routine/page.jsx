@@ -120,8 +120,8 @@ const page = memo(() => {
   const subNameref = useRef(null);
   const rootroomref = useRef(null);
   const roomref = useRef(null);
-  const roottimeref = useRef(null);
-  const timeref = useRef(null);
+  const starttimeref = useRef(null);
+  const endtimeref = useRef(null);
   const user = useSelector((state) => state.globalSlice.user);
   console.log("🚀 ~ page ~ user:", user);
 
@@ -135,7 +135,7 @@ const page = memo(() => {
     tname: "",
     subName: "",
     room: "",
-    time: "",
+    time: ["", ""],
     ind: 0,
   });
 
@@ -146,35 +146,69 @@ const page = memo(() => {
     roomref.current.value = +classData.room;
 
     //updating time value
-    const roottimeref_options = roottimeref.current.options;
-    for (let i = 0; i < roottimeref_options.length; i++) {
-      if (classData.time == roottimeref_options[i].innerHTML) {
-        roottimeref.current.selectedIndex = i;
-        break;
-      }
+    function formatTime(inputTime) {
+      const [hours, minutes] = inputTime.split(":");
+      const formattedHours = hours.length === 1 ? "0" + hours : hours;
+      const formattedTime = formattedHours + ":" + minutes;
+      return formattedTime;
     }
+
+    const convert12hTo24h = (timeStr) => {
+      const [time, modifier] = timeStr.split(" ");
+      let [hours, minutes] = time.split(":");
+      if (hours === "12") {
+        hours = "00";
+      }
+      if (modifier === "PM") {
+        hours = parseInt(hours, 10) + 12;
+      }
+      return `${hours}:${minutes}`;
+    };
+    console.log(
+      formatTime(classData.time[0].split(" ")[0]) +
+        classData.time[0].split(" ")[1],
+      "hihhh"
+    );
+    starttimeref.current.value = convert12hTo24h(
+      formatTime(classData.time[0].split(" ")[0]),
+      classData.time[0].split(" ")[1]
+    );
+    endtimeref.current.value = convert12hTo24h(
+      formatTime(classData.time[1].split(" ")[0]),
+      classData.time[1].split(" ")[1]
+    );
+    // const roottimeref_options = roottimeref.current.options;
+    // for (let i = 0; i < roottimeref_options.length; i++) {
+    //   if (classData.time == roottimeref_options[i].innerHTML) {
+    //     roottimeref.current.selectedIndex = i;
+    //     break;
+    //   }
+    // }
 
     //updating day value
     const rootdayref_options = rootdayref.current.options;
     rootdayref.current.selectedIndex = row + 1;
 
     //updating teacherName value
-    const roottnameref_options = roottnameref.current.options;
-    for (let i = 0; i < roottnameref_options.length; i++) {
-      if (classData.tname == roottnameref_options[i].innerHTML) {
-        roottnameref.current.selectedIndex = i;
-        break;
-      }
-    }
+    tnameref.current.value = classData.tname;
+
+    // const roottnameref_options = roottnameref.current.options;
+    // for (let i = 0; i < roottnameref_options.length; i++) {
+    //   if (classData.tname == roottnameref_options[i].innerHTML) {
+    //     roottnameref.current.selectedIndex = i;
+    //     break;
+    //   }
+    // }
 
     //updating subName value
-    const rootsubNameref_options = rootsubNameref.current.options;
-    for (let i = 0; i < rootsubNameref_options.length; i++) {
-      if (classData.subName == rootsubNameref_options[i].innerHTML) {
-        rootsubNameref.current.selectedIndex = i;
-        break;
-      }
-    }
+    subNameref.current.value = classData.subName;
+    // const rootsubNameref_options = rootsubNameref.current.options;
+    // for (let i = 0; i < rootsubNameref_options.length; i++) {
+    //   if (classData.subName == rootsubNameref_options[i].innerHTML) {
+    //     rootsubNameref.current.selectedIndex = i;
+    //     break;
+    //   }
+    // }
     setCurrentState({
       day: rootdayref_options[row + 1].innerHTML,
       tname: classData.tname,
@@ -210,7 +244,7 @@ const page = memo(() => {
   function handleTname(e) {
     setCurrentState({
       ...currentState,
-      tname: e.target[e.target.selectedIndex].innerHTML,
+      tname: e.target.value,
     });
   }
   function handleRoom(e) {
@@ -222,7 +256,7 @@ const page = memo(() => {
   function handleSubname(e) {
     setCurrentState({
       ...currentState,
-      subName: e.target[e.target.selectedIndex].innerHTML,
+      subName: e.target.value,
     });
   }
   function handleDay(e) {
@@ -232,26 +266,56 @@ const page = memo(() => {
       ind: parseInt(e.target.value) - 1,
     });
   }
-  function handleTime(e) {
+  function handleStartTime(e) {
+    const timeString = e.target.value.split(" ")[0];
+    const timeString12hr = new Date(
+      "1970-01-01T" + timeString + "Z"
+    ).toLocaleTimeString("en-US", {
+      timeZone: "UTC",
+      hour12: true,
+      hour: "numeric",
+      minute: "numeric",
+    });
+    let time = currentState.time;
+    time[0] = timeString12hr;
     setCurrentState({
       ...currentState,
-      time: e.target[e.target.selectedIndex].innerHTML,
+      time,
     });
   }
+  function handleEndTime(e) {
+    const timeString = e.target.value.split(" ")[0];
+    const timeString12hr = new Date(
+      "1970-01-01T" + timeString + "Z"
+    ).toLocaleTimeString("en-US", {
+      timeZone: "UTC",
+      hour12: true,
+      hour: "numeric",
+      minute: "numeric",
+    });
+    let time = currentState.time;
+    time[1] = timeString12hr;
+    setCurrentState({
+      ...currentState,
+      time,
+    });
+  }
+
   function setInputNull() {
     setCurrentState({
       day: "",
       tname: "",
       subName: "",
       room: "",
-      time: "",
+      time: ["", ""],
       ind: 0,
     });
     dayref.current.selected = true;
-    tnameref.current.selected = true;
-    subNameref.current.selected = true;
+    tnameref.current.value = "";
+    subNameref.current.value = "";
     roomref.current.value = "";
-    timeref.current.selected = true;
+    starttimeref.current.value = "";
+    endtimeref.current.value = "";
     setIndexes(null);
     setNeedDataChange(0);
     console.log("input null");
@@ -431,22 +495,15 @@ const page = memo(() => {
             <br></br>
             <p>
               Course Code :
-              <select
-                ref={rootsubNameref}
+              <input
+                type="text"
+                ref={subNameref}
                 onChange={handleSubname}
-                className="text-black"
+                className="text-black "
                 name=""
                 id=""
-              >
-                <option ref={subNameref}>Select Course Code</option>
-                <option value="">IEC-231</option>
-                <option value="">CSE-211</option>
-                <option value="">CSE-212</option>
-                <option value="">CSE-213</option>
-                <option value="">CSE-214</option>
-                <option value="">MAT-131</option>
-                <option value="">BDS-211</option>
-              </select>
+              />
+              {/* <option ref={subNameref}>Select Course Code</option> */}
             </p>
           </div>
 
@@ -454,40 +511,35 @@ const page = memo(() => {
           <div className="flex gap-12">
             <p>
               Teacher Code :
-              <select
-                ref={roottnameref}
+              <input
+                ref={tnameref}
                 onChange={handleTname}
                 className="text-black"
                 name=""
                 id=""
-              >
-                <option ref={tnameref}>Select Teacher Code</option>
-                <option value="">AAS</option>
-                <option value="">MNI</option>
-                <option value="">SRD</option>
-                <option value="">AZ</option>
-                <option value="">TTT</option>
-                <option value="">ARS</option>
-              </select>
+              />
             </p>
 
             <br></br>
             <p>
               Time :
-              <select
-                ref={roottimeref}
-                onChange={handleTime}
+              <input
+                type="time"
+                ref={starttimeref}
+                onChange={handleStartTime}
                 className="text-black"
                 name=""
                 id=""
-              >
-                <option ref={timeref}>Select Time</option>
-                <option value="">9:00 AM - 10:30 AM</option>
-                <option value="">10:35 AM - 12:05 PM</option>
-                <option value="">12:10 PM - 01:40 PM</option>
-                <option value="">02:10 PM - 03:40 PM</option>
-                <option value="">03:45 PM - 05:15 PM</option>
-              </select>
+              />{" "}
+              to
+              <input
+                type="time"
+                ref={endtimeref}
+                onChange={handleEndTime}
+                className="text-black"
+                name=""
+                id=""
+              />
             </p>
           </div>
           <br />

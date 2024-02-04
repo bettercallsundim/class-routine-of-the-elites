@@ -60,7 +60,7 @@ export default function Routine({
                         <p
                           className={`t bg-lime-600 px-2 rounded-md md:rounded-full my-2   font-semibold text-center bxsh ${theme[ind].time}`}
                         >
-                          {classData?.time}
+                          {classData?.time[0]} - {classData?.time[1]}
                         </p>
                         <p className="flex md:block flex-wrap flex-row ">
                           <span
