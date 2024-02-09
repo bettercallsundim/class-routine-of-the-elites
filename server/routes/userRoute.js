@@ -133,6 +133,7 @@ app.post("/download", async (req, res) => {
       });
     }
     await delay(2000);
+    //okay
     // await page.screenshot({
     //   path: "screenshots/screenshot1.jpg",
     // });
