@@ -1,5 +1,5 @@
+import chromium from "@sparticuz/chromium";
 import bcrypt from "bcrypt";
-import chromium from "chrome-aws-lambda";
 import * as dotenv from "dotenv";
 import express from "express";
 import jwt from "jsonwebtoken";
