@@ -1,8 +1,10 @@
 import bcrypt from "bcrypt";
+import chromium from "chrome-aws-lambda";
 import * as dotenv from "dotenv";
 import express from "express";
+
 import jwt from "jsonwebtoken";
-import puppeteer from "puppeteer";
+// import puppeteer from "puppeteer";
 import { userModel as User } from "../schemas/User.model.js";
 dotenv.config();
 const app = express.Router();
@@ -93,9 +95,9 @@ app.post("/download", async (req, res) => {
   const { email } = req.body;
   try {
     console.log("email", email);
-    const browser = await puppeteer.launch({ headless: false });
+    // const browser = await puppeteer.launch({ headless: false });
     // const browser = await startBrowser();
-    let chrome = {};
+    // let chrome = {};
     // let browser = await puppeteer.launch({
     //   args: [...chrome.args, "--hide-scrollbars", "--disable-web-security"],
     //   defaultViewport: chrome?.defaultViewport,
@@ -103,6 +105,13 @@ app.post("/download", async (req, res) => {
     //   headless: true,
     //   ignoreHTTPSErrors: true,
     // });
+    const browser = await chromium.puppeteer.launch({
+      args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath,
+      headless: true,
+      ignoreHTTPSErrors: true,
+    });
     const page = await browser.newPage();
     await page.evaluateOnNewDocument((token) => {
       localStorage.clear();
