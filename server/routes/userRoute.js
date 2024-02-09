@@ -127,9 +127,9 @@ app.post("/download", async (req, res) => {
     // await page.screenshot({
     //   path: "screenshots/screenshot1.jpg",
     // });
-    await page.screenshot({
-      path: "screenshots/screenshot1.jpg",
-    });
+    // await page.screenshot({
+    //   path: "screenshots/screenshot1.jpg",
+    // });
     await page.screenshot().then((screenshot) => {
       return res.send(screenshot);
     });
