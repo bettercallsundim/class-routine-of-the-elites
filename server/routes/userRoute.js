@@ -124,7 +124,9 @@ app.post("/download", async (req, res) => {
       localStorage.clear();
       localStorage.setItem("email", token);
     }, email);
-    await page.goto(`${process.env.FRONTEND}/routine`, { waitUntil: "load" });
+    await page.goto(`${process.env.FRONTEND}/routine-page`, {
+      waitUntil: "load",
+    });
     async function delay(time) {
       return new Promise(function (resolve) {
         setTimeout(resolve, time);
