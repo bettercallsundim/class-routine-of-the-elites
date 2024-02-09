@@ -132,7 +132,7 @@ app.post("/download", async (req, res) => {
         setTimeout(resolve, time);
       });
     }
-    await delay(5000);
+    await delay(2000);
     // await page.screenshot({
     //   path: "screenshots/screenshot1.jpg",
     // });
