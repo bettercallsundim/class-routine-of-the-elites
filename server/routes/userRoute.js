@@ -2,8 +2,8 @@ import bcrypt from "bcrypt";
 import chromium from "chrome-aws-lambda";
 import * as dotenv from "dotenv";
 import express from "express";
-
 import jwt from "jsonwebtoken";
+import puppeteer from "puppeteer-core";
 // import puppeteer from "puppeteer";
 import { userModel as User } from "../schemas/User.model.js";
 dotenv.config();
@@ -105,11 +105,18 @@ app.post("/download", async (req, res) => {
     //   headless: true,
     //   ignoreHTTPSErrors: true,
     // });
-    const browser = await chromium.puppeteer.launch({
-      args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
+    // const browser = await chromium.puppeteer.launch({
+    //   args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
+    //   defaultViewport: chromium.defaultViewport,
+    //   executablePath: await chromium.executablePath,
+    //   headless: true,
+    //   ignoreHTTPSErrors: true,
+    // });
+    const browser = await puppeteer.launch({
+      args: chromium.args,
       defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath,
-      headless: true,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless,
       ignoreHTTPSErrors: true,
     });
     const page = await browser.newPage();
