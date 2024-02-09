@@ -47,7 +47,7 @@ export default function Login() {
               const { email, name, picture } = decoded;
               localStorage.setItem("email", email);
               continueGoogle({ name, email, picture });
-              router.push("/feed");
+              router.push("/class-routine");
             }}
             onError={() => {
               const notifyFail = () => toast.error("Logged in failed");

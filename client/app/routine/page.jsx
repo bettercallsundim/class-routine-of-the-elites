@@ -12,7 +12,6 @@ export default function RoutinePage() {
       .then((res) => {
         console.log(res, "user fetched");
         setRoutine(res.data.user.routine);
-        // Create a browser instance
       })
       .catch((res) => {
         console.log("failed");
