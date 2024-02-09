@@ -1,13 +1,27 @@
 "use client";
 
-export default function Routine({
-  routine,
-  handleDataChange,
-  themeClassInd: ind,
-  theme,
-  currentColumn,
-  setInputNull,
-}) {
+import axios from "axios";
+import { useEffect, useState } from "react";
+
+export default function RoutinePage() {
+  const [routine, setRoutine] = useState([]);
+  async function fetchUser() {
+    const email = localStorage.getItem("email");
+    await axios
+      .get(`${process.env.NEXT_PUBLIC_BACKEND}/user/${email}`)
+      .then((res) => {
+        console.log(res, "user fetched");
+        setRoutine(res.data.user.routine);
+        // Create a browser instance
+      })
+      .catch((res) => {
+        console.log("failed");
+      });
+  }
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
   return (
     <div className="routine">
       <h4 className="bg-rose-900 px-8 text-4xl text-white font-medium py-2 jokename">
@@ -26,18 +40,9 @@ export default function Routine({
         </p>
       </h4>
 
-      <div
-        onClick={() => {
-          console.log("why", currentColumn);
-          if (currentColumn) {
-            console.log("why2");
-            setInputNull();
-          }
-        }}
-        className="anotherOne flex flex-col md:flex-row gap-8 mt-8"
-      >
+      <div className="anotherOne flex flex-col md:flex-row gap-8 mt-8">
         <div className="order-2 md:order-1 table text-white text-[20px] font-jost ">
-          <table className={`${theme[ind].table}`}>
+          <table>
             {routine?.map((elm, row) => {
               if (elm.classes.length > 0) {
                 return (
@@ -46,37 +51,27 @@ export default function Routine({
 
                     <th className="pl-1 md:p-2">{elm?.day}</th>
                     {elm?.classes?.map((classData, col) => (
-                      <td
-                        onClick={() => {
-                          handleDataChange(classData, row, col);
-                        }}
-                        className={`px-1  md:px-2 md:py-4 ${
-                          currentColumn?.col === col &&
-                          currentColumn?.row === row
-                            ? "bg-red-500"
-                            : ""
-                        } `}
-                      >
+                      <td>
                         <p
-                          className={`t bg-lime-600 px-2 rounded-md md:rounded-full my-2   font-semibold text-center bxsh ${theme[ind].time}`}
+                          className={`t bg-lime-600 px-2 rounded-md md:rounded-full my-2   font-semibold text-center bxsh`}
                         >
                           {classData?.time[0]} - {classData?.time[1]}
                         </p>
                         <p className="flex md:block flex-wrap flex-row ">
                           <span
-                            className={`text-black bg-white px-2 basis-[100%] font-semibold bxsh rounded-md md:rounded-full ${theme[ind].sub}`}
+                            className={`text-black bg-white px-2 basis-[100%] font-semibold bxsh rounded-md md:rounded-full `}
                           >
                             {classData?.subName}
                           </span>{" "}
                           <span
-                            className={`bg-rose-600 px-2  font-semibold flex-grow-0 bxsh  rounded-md md:rounded-full ${theme[ind].tname}`}
+                            className={`bg-rose-600 px-2  font-semibold flex-grow-0 bxsh  rounded-md md:rounded-full `}
                           >
                             {classData?.tname}
                           </span>
                           <span className="hidden md:inline-block"></span>
                           {"   "}&nbsp;
                           <span
-                            className={`bg-sky-600 px-2  mb-2  font-semibold bxsh  rounded-md md:rounded-full ${theme[ind].room}`}
+                            className={`bg-sky-600 px-2  mb-2  font-semibold bxsh  rounded-md md:rounded-full `}
                           >
                             {classData?.room}
                           </span>

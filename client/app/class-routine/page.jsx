@@ -127,6 +127,7 @@ const page = memo(() => {
 
   let [r, setR] = useState(initRoutine);
   let [indexes, setIndexes] = useState(null);
+  let [email, setEmail] = useState(null);
   let [needDataChange, setNeedDataChange] = useState(0);
   console.log(r, "userdbbbb");
   let [themeClassInd, setthemeClassInd] = useState(0);
@@ -411,7 +412,7 @@ const page = memo(() => {
   async function handleSaveRoutine() {
     await axios
       .post(`${process.env.NEXT_PUBLIC_BACKEND}/user/saveRoutine`, {
-        email: user.email,
+        email: email,
         routine: r,
       })
       .then((res) => {
@@ -423,7 +424,7 @@ const page = memo(() => {
   }
   async function fetchUser() {
     await axios
-      .get(`${process.env.NEXT_PUBLIC_BACKEND}/user/${user?.email}`)
+      .get(`${process.env.NEXT_PUBLIC_BACKEND}/user/${email}`)
       .then((res) => {
         console.log(res, "user fetched");
         setR(res.data.user.routine);
@@ -435,39 +436,58 @@ const page = memo(() => {
   }
 
   async function handleDownload() {
-    const id = localStorage.getItem("user");
+    const id = localStorage.getItem("email");
     await axios
-      .post(`${process.env.NEXT_PUBLIC_BACKEND}/user/download`, {
-        token: id,
-      })
+      .post(
+        `${process.env.NEXT_PUBLIC_BACKEND}/user/download`,
+        {
+         email,
+        },
+        {
+          responseType: "arraybuffer",
+        }
+      )
       .then((res) => {
+        // Function to convert ArrayBuffer to base64
+        const arrayBufferToBase64 = (buffer) => {
+          let binary = "";
+          const bytes = new Uint8Array(buffer);
+          for (let i = 0; i < bytes.byteLength; i++) {
+            binary += String.fromCharCode(bytes[i]);
+          }
+          return btoa(binary);
+        };
         console.log(res, "user download request done");
-        // Convert the buffer data to a Blob
-        const imageUrl = `data:image/png;base64,${res.data.data}`;
-        setImgsrc(`data:image/png;base64,${res.data.data}`);
-
+        const screenshot = arrayBufferToBase64(res.data);
         const link = document.createElement("a");
-        link.href = imageUrl;
-        link.download = "image.png";
+        link.href = `data:image/png;base64,${screenshot}`;
+        link.download = "screenshot.png";
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-        console.log(imageUrl);
-        // setR(res.data.user.routine);
-        // Create a browser instance
+        console.log("🚀 ~ .then ~ screenshot:", screenshot);
       })
       .catch((res) => {
-        console.log("failed");
+        console.log("failed", res);
       });
   }
   useEffect(() => {
     fetchUser();
   }, []);
+  useEffect(() => {
+    let emailGot = localStorage.getItem("email");
+    if (emailGot) {
+      setEmail(emailGot);
+    }
+  }, []);
+  useEffect(() => {
+    fetchUser();
+  }, [email]);
 
   return (
-    <div className="bg-bng text-text py-8 px-4 md:px-12 flex items-start md:h-[90vh] w-full overflow-hidden ">
+    <div className="bg-bng text-text py-8 px-4 md:px-12 flex items-start md:h-[90vh] w-full  ">
       <div className="hidden md:block">sidebar</div>
-      <div className="hidescroll overflow-y-scroll h-[inherit] w-full md:w-[unset]">
+      <div className=" h-[inherit] w-full md:w-[unset]">
         <div
           ref={rootRef}
           className="bg-gray-800 min-h-screen min-w-full text-white p-4"

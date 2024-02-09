@@ -1,8 +1,10 @@
 import bcrypt from "bcrypt";
+import * as dotenv from "dotenv";
 import express from "express";
 import jwt from "jsonwebtoken";
+import puppeteer from "puppeteer";
 import { userModel as User } from "../schemas/User.model.js";
-import { startBrowser } from "../utils/puppeteer.js";
+dotenv.config();
 const app = express.Router();
 //user signup
 app.post("/signup", async (req, res) => {
@@ -64,12 +66,10 @@ app.post("/login", async (req, res) => {
 });
 //save routine
 app.post("/saveRoutine", async (req, res) => {
-  const { roll: user, routine } = req.body;
+  const { email, routine } = req.body;
   console.log("ny id:; ", req.body);
   try {
-    const id = parseInt(user);
-
-    const resd = await User.findOneAndUpdate({ id }, { routine });
+    const resd = await User.findOneAndUpdate({ email }, { routine });
     return res.json({ status: true, message: "routine saved" });
   } catch (error) {
     console.log("Error while loggin in", error);
@@ -77,12 +77,12 @@ app.post("/saveRoutine", async (req, res) => {
   }
 });
 //get a user
-app.get("/:id", async (req, res) => {
-  const { id: user } = req.params;
+app.get("/:email", async (req, res) => {
+  const { email } = req.params;
   try {
-    const id = parseInt(user);
-    const resd = await User.findOne({ id });
-    return res.json({ status: true, user: resd, message: "user fetched" });
+    const resd = await User.findOne({ email });
+    if (resd)
+      return res.json({ status: true, user: resd, message: "user fetched" });
   } catch (error) {
     console.log("user fetch failed", error);
     return res.json({ status: false, message: "user fetch failed" });
@@ -90,29 +90,41 @@ app.get("/:id", async (req, res) => {
 });
 //download a user
 app.post("/download", async (req, res) => {
-  const { token: tokenize } = req.body;
+  const { email } = req.body;
   try {
-    // const browser = await puppeteer.launch();
-    const browser = await startBrowser();
-
+    console.log("email", email);
+    const browser = await puppeteer.launch({ headless: false });
+    // const browser = await startBrowser();
+    let chrome = {};
+    // let browser = await puppeteer.launch({
+    //   args: [...chrome.args, "--hide-scrollbars", "--disable-web-security"],
+    //   defaultViewport: chrome?.defaultViewport,
+    //   executablePath: await chrome.executablePath,
+    //   headless: true,
+    //   ignoreHTTPSErrors: true,
+    // });
     const page = await browser.newPage();
     await page.evaluateOnNewDocument((token) => {
       localStorage.clear();
-      localStorage.setItem("user", token);
-    }, tokenize);
-    await page.goto("http://localhost:5173/routine", { waitUntil: "load" });
+      localStorage.setItem("email", token);
+    }, email);
+    await page.goto(`${process.env.FRONTEND}/routine`, { waitUntil: "load" });
+    async function delay(time) {
+      return new Promise(function (resolve) {
+        setTimeout(resolve, time);
+      });
+    }
+    await delay(5000);
     // await page.screenshot({
     //   path: "screenshots/screenshot1.jpg",
     // });
-    const screenshot = await page.screenshot({
-      encoding: "base64",
+    await page.screenshot({
+      path: "screenshots/screenshot1.jpg",
     });
-
-    return res.json({
-      status: true,
-      message: "download fetched",
-      data: screenshot,
+    await page.screenshot().then((screenshot) => {
+      return res.send(screenshot);
     });
+    // await browser.close();
   } catch (error) {
     console.log("download fetch failed", error);
     return res.json({ status: false, message: "download fetch failed" });

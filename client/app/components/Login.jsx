@@ -16,7 +16,7 @@ export default function Login() {
   const router = useRouter();
   const continueGoogle = async (data) => {
     const response = await axios.post(
-      "http://localhost:4000/user/signup",
+      `${process.env.NEXT_PUBLIC_BACKEND}/user/signup`,
       data
     );
   };
@@ -45,6 +45,7 @@ export default function Login() {
               const decoded = jwtDecode(credential);
               dispatch(setUser(decoded));
               const { email, name, picture } = decoded;
+              localStorage.setItem("email", email);
               continueGoogle({ name, email, picture });
               router.push("/feed");
             }}
