@@ -1,8 +1,25 @@
 "use client";
-
+const theme = [
+  {
+    time: "time1",
+    tname: "tname1",
+    room: "room1",
+    sub: "sub1",
+    table: "table1",
+  },
+  {
+    time: "time2",
+    tname: "tname2",
+    room: "room2",
+    sub: "sub2",
+    table: "table2",
+  },
+];
+let themeClassInd = 1;
+import "@/app/index.css"
+import "@/app/globals.css"
 import axios from "axios";
 import { useEffect, useState } from "react";
-
 export default function RoutinePage() {
   const [routine, setRoutine] = useState([]);
   async function fetchUser() {
@@ -34,14 +51,14 @@ export default function RoutinePage() {
           </span>
           <span className="font-bold text-sm mr-4  text-sky-500">#cse61D</span>
           <span className="text-orange-400 font-bold text-sm mr-4 ">
-            Updated : 06/02/24
+            Updated : 10/02/24
           </span>
         </p>
       </h4>
 
       <div className="anotherOne flex flex-col md:flex-row gap-8 mt-8">
         <div className="order-2 md:order-1 table text-white text-[20px] font-jost ">
-          <table>
+          <table className={`${theme[themeClassInd].table}`}>
             {routine?.map((elm, row) => {
               if (elm.classes.length > 0) {
                 return (
@@ -52,25 +69,25 @@ export default function RoutinePage() {
                     {elm?.classes?.map((classData, col) => (
                       <td>
                         <p
-                          className={`t bg-lime-600 px-2 rounded-md md:rounded-full my-2   font-semibold text-center bxsh`}
+                          className={`t bg-lime-600 px-2 rounded-md md:rounded-full my-2   font-semibold text-center bxsh ${theme[themeClassInd].time}`}
                         >
                           {classData?.time[0]} - {classData?.time[1]}
                         </p>
                         <p className="flex md:block flex-wrap flex-row ">
                           <span
-                            className={`text-black bg-white px-2 basis-[100%] font-semibold bxsh rounded-md md:rounded-full `}
+                            className={`text-black bg-white px-2 basis-[100%] font-semibold bxsh rounded-md md:rounded-full ${theme[themeClassInd].sub}`}
                           >
                             {classData?.subName}
                           </span>{" "}
                           <span
-                            className={`bg-rose-600 px-2  font-semibold flex-grow-0 bxsh  rounded-md md:rounded-full `}
+                            className={`bg-rose-600 px-2  font-semibold flex-grow-0 bxsh  rounded-md md:rounded-full ${theme[themeClassInd].tname}`}
                           >
                             {classData?.tname}
                           </span>
                           <span className="hidden md:inline-block"></span>
                           {"   "}&nbsp;
                           <span
-                            className={`bg-sky-600 px-2  mb-2  font-semibold bxsh  rounded-md md:rounded-full `}
+                            className={`bg-sky-600 px-2  mb-2  font-semibold bxsh  rounded-md md:rounded-full ${theme[themeClassInd].room} `}
                           >
                             {classData?.room}
                           </span>

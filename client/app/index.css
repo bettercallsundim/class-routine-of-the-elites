@@ -173,3 +173,6 @@ td {
   background: white;
   color: black;
 }
+td {
+  padding: 15px;
+}
