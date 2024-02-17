@@ -9,10 +9,17 @@
   font-family: sbfont;
   src: url("/fonts/sbf.ttf") format("truetype");
 }
+@font-face {
+  font-family: avenir;
+  src: url("/avenir.ttf") format("truetype");
+}
 .codename {
   font-family: "Codename";
 }
 .sbf {
+  font-family: "sbfont";
+}
+.avenir {
   font-family: "sbfont";
 }
 .cards {

@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
         <html className="roothtml" lang="en">
           <body className="poppins">
             <ThemeProvider>
-              <Nav />
+              {/* <Nav /> */}
               {children}
             </ThemeProvider>
           </body>
