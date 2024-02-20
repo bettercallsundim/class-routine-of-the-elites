@@ -1,4 +1,3 @@
-import Nav from "./components/Nav";
 import OauthProvider from "./components/OauthProvider";
 import ReduxProvider from "./components/ReduxProvider";
 import ThemeProvider from "./components/ThemeProvider";
@@ -6,8 +5,8 @@ import "./globals.css";
 import "./index.css";
 
 export const metadata = {
-  title: "foodOgraphy",
-  description: "foodOgraphy",
+  title: "CROTE",
+  description: "CROTE",
 };
 
 export default function RootLayout({ children }) {

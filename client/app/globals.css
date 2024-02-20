@@ -49,3 +49,14 @@
 .poppins {
   font-family: "Poppins", sans-serif;
 }
+.grd {
+  background: -webkit-linear-gradient(#4ea7fa, #ff5858);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.rootInput input {
+  @apply rounded-md px-2 py-1;
+}
+.rootInput select {
+  @apply rounded-md;
+}

@@ -10,7 +10,7 @@ export default function Routine({
 }) {
   return (
     <div className="routine">
-      <h4 className="bg-rose-900 px-8 text-4xl text-white font-medium py-2 jokename">
+      {/* <h4 className="bg-rose-900 px-8 text-4xl text-white font-medium py-2 jokename">
         Prime University{" "}
       </h4>
       <h4 className="bg-white px-8 text-xl text-black font-medium py-2 tags">
@@ -24,7 +24,7 @@ export default function Routine({
             Updated : 06/02/24
           </span>
         </p>
-      </h4>
+      </h4> */}
 
       <div
         onClick={() => {

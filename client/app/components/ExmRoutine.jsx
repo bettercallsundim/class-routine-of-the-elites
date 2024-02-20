@@ -1,4 +1,5 @@
 "use client";
+import { DateTime } from "luxon";
 
 export default function ExmRoutine({ routine, handleDataChange }) {
   // const [routine, setRoutine] = useState([]);
@@ -65,7 +66,12 @@ export default function ExmRoutine({ routine, handleDataChange }) {
             </tr> */}
             {routine?.map((elm, ind1) => (
               <tr className="py-2">
-                {elm?.exams?.length > 0 && <td>{elm?.date}</td>}
+                {elm?.exams?.length > 0 && (
+                  <td className="exmday">
+                    {elm?.date} <br/>
+                    {DateTime.fromISO(elm?.date)?.weekdayLong}
+                  </td>
+                )}
 
                 {elm?.exams?.map((exm, ind2) => {
                   return (

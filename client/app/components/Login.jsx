@@ -1,6 +1,5 @@
 "use client";
 
-import { getDataFromLocal } from "@/utils/localStorage";
 import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
@@ -11,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../redux/globalSlice";
 export default function Login() {
   const dispatch = useDispatch();
-  const [tokenData, setTokenData] = useState(null);
+  const [email, setEmail] = useState(null);
   const userFromState = useSelector((state) => state.globalSlice.user);
   const router = useRouter();
   const continueGoogle = async (data) => {
@@ -21,12 +20,12 @@ export default function Login() {
     );
   };
   useEffect(() => {
-    const { token: gotToken } = getDataFromLocal("token");
-    if (gotToken) {
-      setTokenData(gotToken);
+    const emails = localStorage.getItem("email");
+    if (emails) {
+      setEmail(emails);
     }
   }, []);
-  if (!tokenData || !userFromState?.email) {
+  if (!email) {
     return (
       <div className="my-auto mx-auto">
         <Toaster
@@ -36,26 +35,24 @@ export default function Login() {
           }}
         />
 
-        {(!userFromState?.email || !tokenData) && (
-          <GoogleLogin
-            onSuccess={({ credential }) => {
-              const notify = () =>
-                toast.success("Logged in successfully. Redirecting...");
-              notify();
-              const decoded = jwtDecode(credential);
-              dispatch(setUser(decoded));
-              const { email, name, picture } = decoded;
-              localStorage.setItem("email", email);
-              continueGoogle({ name, email, picture });
-              router.push("/class-routine");
-            }}
-            onError={() => {
-              const notifyFail = () => toast.error("Logged in failed");
-              notifyFail();
-            }}
-            useOneTap
-          />
-        )}
+        <GoogleLogin
+          onSuccess={({ credential }) => {
+            const notify = () =>
+              toast.success("Logged in successfully. Redirecting...");
+            notify();
+            const decoded = jwtDecode(credential);
+            dispatch(setUser(decoded));
+            const { email, name, picture } = decoded;
+            localStorage.setItem("email", email);
+            continueGoogle({ name, email, picture });
+            router.push("/class-routine");
+          }}
+          onError={() => {
+            const notifyFail = () => toast.error("Logged in failed");
+            notifyFail();
+          }}
+          useOneTap={false}
+        />
       </div>
     );
   }

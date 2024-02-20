@@ -16,8 +16,8 @@ const theme = [
   },
 ];
 let themeClassInd = 1;
-import "@/app/index.css"
-import "@/app/globals.css"
+import "@/app/globals.css";
+import "@/app/index.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 export default function RoutinePage() {
@@ -34,6 +34,22 @@ export default function RoutinePage() {
         console.log("failed");
       });
   }
+  // Get current date
+  let currentDate = new Date();
+
+  // Get day, month, and year
+  let day = currentDate.getDate();
+  let month = currentDate.getMonth() + 1; // Note: January is 0, so we add 1 to get the correct month
+  let year = currentDate.getFullYear();
+
+  // Add leading zeros if necessary
+  day = day < 10 ? "0" + day : day;
+  month = month < 10 ? "0" + month : month;
+
+  // Construct the date string in the desired format
+  let formattedDate = `${day}/${month}/${year}`;
+
+  console.log(formattedDate); // Output: e.g., 20/02/2024
 
   useEffect(() => {
     fetchUser();
@@ -51,14 +67,14 @@ export default function RoutinePage() {
           </span>
           <span className="font-bold text-sm mr-4  text-sky-500">#cse61D</span>
           <span className="text-orange-400 font-bold text-sm mr-4 ">
-            Updated : 10/02/24
+            Updated : {formattedDate}
           </span>
         </p>
       </h4>
 
-      <div className="anotherOne flex flex-col md:flex-row gap-8 mt-8">
-        <div className="order-2 md:order-1 table text-white text-[20px] font-jost ">
-          <table className={`${theme[themeClassInd].table}`}>
+      <div className="anotherOne flex flex-col md:flex-row gap-8 mt-2 w-full">
+        <div className="order-2 md:order-1 table text-white text-[20px] font-jost w-full">
+          <table className={`${theme[themeClassInd].table} w-full`}>
             {routine?.map((elm, row) => {
               if (elm.classes.length > 0) {
                 return (

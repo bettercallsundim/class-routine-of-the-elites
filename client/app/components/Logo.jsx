@@ -2,7 +2,7 @@ import { memo } from "react";
 
 const Logo = memo(() => {
   return (
-    <div className="h-full w-full avenir text-sm">
+    <div className="h-full w-full avenir text-xl">
       <div className="mb-2 h-[85px] ">
         <span className="border-2 border-black uppercase p-4  font-bold  bg-pink-600 text-white">
           C

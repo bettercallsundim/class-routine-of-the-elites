@@ -1,27 +1,62 @@
+"use client";
+import { useEffect, useState } from "react";
+import Login from "./components/Login";
 import Logo from "./components/Logo";
+import { useRouter } from "next/navigation";
 
 export default function page() {
-  return (
-    <div className="min-h-screen min-w-full container mx-auto bg-bng text-text  px-4 md:px-8 flex flex-col justify-center  ">
-      <div className="h-full w-full">
-        <Logo />
-      </div>
-      <div className="mt-4">
-        <h1 className="text-4xl font-bold text-gray-800">
-          an unopinionated aesthetic
-          <br />
-          routine generator.
-        </h1>
-      </div>
-      {/* <div className=" relative  flex items-center justify-center h-[100px] lg:h-[500px]  overflow-hidden">
-        <div className="hidden lg:block w-[100px] h-full bg-primary  absolute left-0"></div>
-        <div className="hidden lg:block w-[100px] h-full bg-secondary  absolute right-0"></div>
-        <div className="hidden lg:block w-[100px] h-full bg-accent   absolute right-[120px]"></div>
-        <div className="hidden md:block w-[700px] h-full bg-sky-300  absolute"></div>
-        <div className="hidden md:block w-[700px] h-full bg-sky-400   absolute top-[50%]"></div>
+  const [email, setEmail] = useState("");
+  const router=useRouter()
+  useEffect(() => {
+    const emails = localStorage.getItem("email");
+    if (emails) {
+      setEmail(emails);
+    }
+  }, []);
 
-        <Login />
-      </div> */}
+  return (
+    <div className="min-h-screen min-w-full container mx-auto bg-bng text-text flex items-center justify-between px-12 ">
+      <div className="fir">
+        <div className="h-full w-full">
+          <Logo />
+        </div>
+        <div className="mt-4">
+          <h1 className="text-4xl font-bold text-gray-800">
+            unopinionated aesthetic
+            <br />
+            <span className="grd">colorful</span> routine generator.
+          </h1>
+        </div>
+      </div>
+      <div className="sec">
+        {/* <p>
+          {" "}
+          <b>Colorful Routine </b>: *exists*
+        </p>
+        <p>
+          {" "}
+          <b>le black-white routine </b>:{" "}
+        </p>
+        <div className="rounded-md">
+          <img
+            src="https://memeheist.com/wp-content/uploads/2023/12/Aukat-Dikha-Di-Meme-template-2.jpg"
+            alt=""
+          />
+        </div> */}
+        {!email && (
+          <h1 className="text-sms font-bold text-white px-4 py-2 rounded-md bg-black mb-4">
+            Sign in to generate
+          </h1>
+        )}
+        {email && (
+          <button onClick={()=>{
+            router.push("/class-routine")
+          }} className="text-sms font-bold text-white px-4 py-2 rounded-md bg-black mb-4">
+            Generate Now
+          </button>
+        )}
+        <div>{!email && <Login />}</div>
+      </div>
     </div>
   );
 }

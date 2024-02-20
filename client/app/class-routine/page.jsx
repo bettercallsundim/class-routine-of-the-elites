@@ -1,5 +1,6 @@
 "use client";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { memo, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import Routine from "../components/Routine";
@@ -110,6 +111,7 @@ let initRoutine = [
   },
 ];
 const page = memo(() => {
+  const router=useRouter()
   const [imgsrc, setImgsrc] = useState("");
   const rootRef = useRef(null);
   const rootdayref = useRef(null);
@@ -441,7 +443,7 @@ const page = memo(() => {
       .post(
         `${process.env.NEXT_PUBLIC_BACKEND}/user/download`,
         {
-         email,
+          email,
         },
         {
           responseType: "arraybuffer",
@@ -478,6 +480,8 @@ const page = memo(() => {
     let emailGot = localStorage.getItem("email");
     if (emailGot) {
       setEmail(emailGot);
+    }else{
+      router.push("/");
     }
   }, []);
   useEffect(() => {
@@ -485,16 +489,12 @@ const page = memo(() => {
   }, [email]);
 
   return (
-    <div className="bg-bng text-text py-8 px-4 md:px-12 flex items-start md:h-[90vh] w-full  ">
-      <div className="hidden md:block">sidebar</div>
-      <div className=" h-[inherit] w-full md:w-[unset]">
-        <div
-          ref={rootRef}
-          className="bg-gray-800 min-h-screen min-w-full text-white p-4"
-        >
-          <div className="flex gap-28">
+    <div className="rootInput">
+      <div className=" bg-[rgba(0,0,0,0.9)] text-white px-8 py-4">
+        <div className="py-4">
+          <div className="flex items-center gap-4 mb-6">
             <p>
-              Day :
+              Day : &nbsp;
               <select
                 ref={rootdayref}
                 onChange={handleDay}
@@ -514,7 +514,7 @@ const page = memo(() => {
             </p>
             <br></br>
             <p>
-              Course Code :
+              Course Code :&nbsp;
               <input
                 type="text"
                 ref={subNameref}
@@ -525,12 +525,8 @@ const page = memo(() => {
               />
               {/* <option ref={subNameref}>Select Course Code</option> */}
             </p>
-          </div>
-
-          <br></br>
-          <div className="flex gap-12">
             <p>
-              Teacher Code :
+              Teacher Code :&nbsp;
               <input
                 ref={tnameref}
                 onChange={handleTname}
@@ -539,10 +535,11 @@ const page = memo(() => {
                 id=""
               />
             </p>
+          </div>
 
-            <br></br>
+          <div className="flex items-center gap-4 ">
             <p>
-              Time :
+              Time :&nbsp;
               <input
                 type="time"
                 ref={starttimeref}
@@ -551,7 +548,7 @@ const page = memo(() => {
                 name=""
                 id=""
               />{" "}
-              to
+              to &nbsp;
               <input
                 type="time"
                 ref={endtimeref}
@@ -561,11 +558,8 @@ const page = memo(() => {
                 id=""
               />
             </p>
-          </div>
-          <br />
-          <div className="flex gap-12 mb-8">
             <p>
-              Room :
+              Room :&nbsp;
               <input
                 className="text-black"
                 ref={roomref}
@@ -575,52 +569,73 @@ const page = memo(() => {
                 id=""
               />
             </p>
+          </div>
+
+          <br />
+          <div className=" ">
             <br />
             <p>
               <button
                 hidden={needDataChange}
                 onClick={handleSubmit}
-                className="bg-rose-700 mr-4 rounded p-2"
+                className="bg-white text-black px-4 py-2 font-medium text-sm mr-2 rounded-lg"
               >
                 Add class
               </button>
               <button
                 hidden={!needDataChange}
                 onClick={handleUpdate}
-                className="bg-rose-700 mr-4 rounded p-2"
+                className="bg-white text-black px-4 py-2 font-medium text-sm mr-2 rounded-lg"
               >
                 Update class
               </button>
               <button
                 onClick={handleDelete}
-                className="bg-rose-700 mr-4 rounded p-2"
+                className="bg-white text-black px-4 py-2 font-medium text-sm mr-2 rounded-lg"
               >
                 Delete class
               </button>
               <button
                 onClick={handleSaveRoutine}
-                className="bg-rose-700 mr-4 rounded p-2"
+                className="bg-white text-black px-4 py-2 font-medium text-sm mr-2 rounded-lg"
               >
                 Save Routine
               </button>
-              <button onClick={changeTheme} className="bg-rose-400 rounded p-2">
+              <button
+                onClick={changeTheme}
+                className="bg-white text-black px-4 py-2 font-medium text-sm mr-2 rounded-lg"
+              >
                 Theme Toggle
               </button>
-              <button onClick={handleLeft} className="bg-rose-400 rounded p-2">
+              <button
+                onClick={handleLeft}
+                className="bg-white text-black px-4 py-2 font-medium text-sm mr-2 rounded-lg"
+              >
                 Move Left
               </button>
-              <button onClick={handleRight} className="bg-rose-400 rounded p-2">
+              <button
+                onClick={handleRight}
+                className="bg-white text-black px-4 py-2 font-medium text-sm mr-2 rounded-lg"
+              >
                 Move Right
               </button>
               <button
                 onClick={handleDownload}
-                className="bg-rose-400 rounded p-2"
+                className="bg-white text-black px-4 py-2 font-medium text-sm mr-2 rounded-lg"
               >
                 Download
               </button>
             </p>
           </div>
-
+          <div>
+            <p className="text-gray-300 mt-4">Tip : Click on any cell to edit individually.
+          </p></div>
+        </div>
+        {/* routine */}
+        <div
+          ref={rootRef}
+          className="bg-gray-800 min-h-screen min-w-full text-white p-4"
+        >
           <Routine
             indexes={indexes}
             handleDataChange={handleDataChange}
