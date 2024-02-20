@@ -78,7 +78,7 @@ export default function RoutinePage() {
             {routine?.map((elm, row) => {
               if (elm.classes.length > 0) {
                 return (
-                  <tr className={``}>
+                  <tr className={`trtr`}>
                     {/* <tr className={`${ind & 5 ? "bg-gray-700 " : "bg-gray-800"}`}> */}
 
                     <th className="pl-1 md:p-2">{elm?.day}</th>
