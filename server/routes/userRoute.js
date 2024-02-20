@@ -132,8 +132,8 @@ app.post("/download", async (req, res) => {
         setTimeout(resolve, time);
       });
     }
+    await delay(1500);
     await page.waitForSelector(".trtr");
-    // await delay(1500);
     //okay
     // await page.screenshot({
     //   path: "screenshots/screenshot1.jpg",
