@@ -371,7 +371,7 @@ const page = memo(() => {
   }
 
   async function handleDownload() {
-    const id = localStorage.getItem("user");
+    const id = localStorage.getItem("email");
     await axios
       .post(`${process.env.NEXT_PUBLIC_BACKEND}/user/download`, {
         token: id,
