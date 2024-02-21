@@ -392,8 +392,9 @@ const page = memo(() => {
         // setR(res.data.user.routine);
         // Create a browser instance
       })
-      .catch((res) => {
-        console.log("failed");
+      .catch((err) => {
+        console.log("failed", err);
+        handleDownload();
       });
   }
   useEffect(() => {
