@@ -347,7 +347,7 @@ const page = memo(() => {
   async function handleSaveRoutine() {
     await axios
       .post(`${process.env.NEXT_PUBLIC_BACKEND}/user/saveRoutine`, {
-        email: user.email,
+        email,
         routine: r,
       })
       .then((res) => {

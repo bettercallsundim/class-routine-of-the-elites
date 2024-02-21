@@ -112,6 +112,11 @@ app.post("/download", async (req, res) => {
     //   headless: true,
     //   ignoreHTTPSErrors: true,
     // });
+    async function delay(time) {
+      return new Promise(function (resolve) {
+        setTimeout(resolve, time);
+      });
+    }
     const browser = await puppeteer.launch({
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
@@ -124,15 +129,12 @@ app.post("/download", async (req, res) => {
       localStorage.clear();
       localStorage.setItem("email", token);
     }, email);
+    await delay(1500);
+
     await page.goto(`${process.env.FRONTEND}/routine-page`, {
       waitUntil: "load",
     });
-    async function delay(time) {
-      return new Promise(function (resolve) {
-        setTimeout(resolve, time);
-      });
-    }
-    // await delay(1500);
+
     await page.waitForSelector(".trtr");
     //okay
     // await page.screenshot({
