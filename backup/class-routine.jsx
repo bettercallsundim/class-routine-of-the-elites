@@ -397,7 +397,9 @@ const page = memo(() => {
       });
   }
   useEffect(() => {
-    fetchUser();
+    if (user?.email) {
+      fetchUser();
+    }
   }, []);
 
   return (
