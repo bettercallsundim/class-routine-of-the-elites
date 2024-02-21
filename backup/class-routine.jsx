@@ -377,30 +377,31 @@ const page = memo(() => {
   }, []);
 
   async function handleDownload() {
-    await axios
-      .post(`${process.env.NEXT_PUBLIC_BACKEND}/user/download`, {
-        email,
-      })
-      .then((res) => {
-        console.log(res, "user download request done");
-        // Convert the buffer data to a Blob
-        const imageUrl = `data:image/png;base64,${res.data.data}`;
-        setImgsrc(`data:image/png;base64,${res.data.data}`);
+    try {
+      await axios
+        .post(`${process.env.NEXT_PUBLIC_BACKEND}/user/download`, {
+          email,
+        })
+        .then((res) => {
+          console.log(res, "user download request done");
+          // Convert the buffer data to a Blob
+          const imageUrl = `data:image/png;base64,${res.data.data}`;
+          setImgsrc(`data:image/png;base64,${res.data.data}`);
 
-        const link = document.createElement("a");
-        link.href = imageUrl;
-        link.download = "image.png";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        console.log(imageUrl);
-        // setR(res.data.user.routine);
-        // Create a browser instance
-      })
-      .catch((err) => {
-        console.log("failed", err);
-        handleDownload();
-      });
+          const link = document.createElement("a");
+          link.href = imageUrl;
+          link.download = "image.png";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          console.log(imageUrl);
+          // setR(res.data.user.routine);
+          // Create a browser instance
+        });
+    } catch (err) {
+      console.log("failed", err);
+      handleDownload();
+    }
   }
   useEffect(() => {
     if (email) {
