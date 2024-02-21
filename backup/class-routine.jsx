@@ -359,7 +359,7 @@ const page = memo(() => {
   }
   async function fetchUser() {
     await axios
-      .get(`${process.env.NEXT_PUBLIC_BACKEND}/user/${user?.email}`)
+      .get(`${process.env.NEXT_PUBLIC_BACKEND}/user/${email}`)
       .then((res) => {
         console.log(res, "user fetched");
         setR(res.data.user.routine);
@@ -403,7 +403,7 @@ const page = memo(() => {
       });
   }
   useEffect(() => {
-    if (user?.email) {
+    if (email) {
       fetchUser();
     }
   }, []);
