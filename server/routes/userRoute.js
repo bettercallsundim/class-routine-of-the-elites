@@ -132,7 +132,7 @@ app.post("/download", async (req, res) => {
         setTimeout(resolve, time);
       });
     }
-    await delay(1500);
+    // await delay(1500);
     await page.waitForSelector(".trtr");
     //okay
     // await page.screenshot({

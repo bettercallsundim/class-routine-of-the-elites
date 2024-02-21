@@ -1,6 +1,5 @@
 import OauthProvider from "./components/OauthProvider";
 import ReduxProvider from "./components/ReduxProvider";
-import ThemeProvider from "./components/ThemeProvider";
 import "./globals.css";
 import "./index.css";
 
@@ -15,10 +14,10 @@ export default function RootLayout({ children }) {
       <OauthProvider>
         <html className="roothtml" lang="en">
           <body className="poppins">
-            <ThemeProvider>
-              {/* <Nav /> */}
-              {children}
-            </ThemeProvider>
+            {/* <ThemeProvider> */}
+            {/* <Nav /> */}
+            {children}
+            {/* </ThemeProvider> */}
           </body>
         </html>
       </OauthProvider>

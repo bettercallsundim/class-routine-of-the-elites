@@ -22,8 +22,22 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 export default function RoutinePage() {
   const [routine, setRoutine] = useState([]);
+  const [email, setEmail] = useState(null);
+  useEffect(() => {
+    const emails = localStorage.getItem("email");
+    if (emails) {
+      setEmail(emails);
+      fetchUser();
+    }
+  }, []);
+  useEffect(() => {
+
+      fetchUser();
+
+  }, [email]);
+
+
   async function fetchUser() {
-    const email = localStorage.getItem("email");
     await axios
       .get(`${process.env.NEXT_PUBLIC_BACKEND}/user/${email}`)
       .then((res) => {
@@ -51,9 +65,6 @@ export default function RoutinePage() {
 
   console.log(formattedDate); // Output: e.g., 20/02/2024
 
-  useEffect(() => {
-    fetchUser();
-  }, []);
   return (
     <div className="routine">
       <h4 className="bg-rose-900 px-8 text-4xl text-white font-medium py-2 jokename">

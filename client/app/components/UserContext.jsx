@@ -32,11 +32,11 @@ const UserContext = ({ children }) => {
       refetch();
     }
   }, [jwt_token]);
-  useEffect(() => {
-    const { token } = getDataFromLocal("token");
-    if (token) setJwt_Token(token);
-    // else refetch();
-  }, []);
+  // useEffect(() => {
+  //   const { token } = getDataFromLocal("token");
+  //   if (token) setJwt_Token(token);
+  //   // else refetch();
+  // }, []);
   console.log("isTokenValid", isTokenValid);
   useEffect(() => {
     console.log(
