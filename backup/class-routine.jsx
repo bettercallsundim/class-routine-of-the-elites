@@ -124,7 +124,7 @@ const page = memo(() => {
   const timeref = useRef(null);
   const user = useSelector((state) => state.globalSlice.user);
   console.log("🚀 ~ page ~ user:", user);
-
+  const [email, setEmail] = useState();
   let [r, setR] = useState(initRoutine);
   let [indexes, setIndexes] = useState(null);
   let [needDataChange, setNeedDataChange] = useState(0);
@@ -369,12 +369,17 @@ const page = memo(() => {
         console.log("failed");
       });
   }
+  useEffect(() => {
+    const emails = localStorage.getItem("email");
+    if (emails) {
+      setEmail(emails);
+    }
+  }, []);
 
   async function handleDownload() {
-    const id = localStorage.getItem("email");
     await axios
       .post(`${process.env.NEXT_PUBLIC_BACKEND}/user/download`, {
-        token: id,
+        email,
       })
       .then((res) => {
         console.log(res, "user download request done");
