@@ -111,7 +111,7 @@ let initRoutine = [
   },
 ];
 const page = memo(() => {
-  const router=useRouter()
+  const router = useRouter();
   const [imgsrc, setImgsrc] = useState("");
   const rootRef = useRef(null);
   const rootdayref = useRef(null);
@@ -434,6 +434,7 @@ const page = memo(() => {
       })
       .catch((res) => {
         console.log("failed");
+        fetchUser();
       });
   }
 
@@ -447,7 +448,6 @@ const page = memo(() => {
         },
         {
           responseType: "arraybuffer",
-          timeout:60000
         }
       )
       .then((res) => {
@@ -472,6 +472,7 @@ const page = memo(() => {
       })
       .catch((res) => {
         console.log("failed", res);
+        handleDownload();
       });
   }
   useEffect(() => {
@@ -481,7 +482,7 @@ const page = memo(() => {
     let emailGot = localStorage.getItem("email");
     if (emailGot) {
       setEmail(emailGot);
-    }else{
+    } else {
       router.push("/");
     }
   }, []);
@@ -629,8 +630,10 @@ const page = memo(() => {
             </p>
           </div>
           <div>
-            <p className="text-gray-300 mt-4">Tip : Click on any cell to edit individually.
-          </p></div>
+            <p className="text-gray-300 mt-4">
+              Tip : Click on any cell to edit individually.
+            </p>
+          </div>
         </div>
         {/* routine */}
         <div
