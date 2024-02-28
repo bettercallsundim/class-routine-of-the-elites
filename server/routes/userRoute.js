@@ -125,6 +125,8 @@ app.post("/download", async (req, res) => {
       ignoreHTTPSErrors: true,
     });
     const page = await browser.newPage();
+    await page.setViewport({ width: 1024, height: 800 });
+
     await page.evaluateOnNewDocument((token) => {
       localStorage.clear();
       localStorage.setItem("email", token);

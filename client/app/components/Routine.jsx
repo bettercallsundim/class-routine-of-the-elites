@@ -50,7 +50,7 @@ export default function Routine({
                         onClick={() => {
                           handleDataChange(classData, row, col);
                         }}
-                        className={`px-1  md:px-2 md:py-4 ${
+                        className={`px-1 cursor-pointer md:px-2 md:py-4 ${
                           currentColumn?.col === col &&
                           currentColumn?.row === row
                             ? "bg-red-500"
@@ -64,7 +64,7 @@ export default function Routine({
                         </p>
                         <p className="flex md:block flex-wrap flex-row ">
                           <span
-                            className={`text-black bg-white px-2 basis-[100%] font-semibold bxsh rounded-md md:rounded-full ${theme[ind].sub}`}
+                            className={`text-white bg-white px-2 basis-[100%] font-semibold bxsh rounded-md md:rounded-full ${theme[ind].sub}`}
                           >
                             {classData?.subName}
                           </span>{" "}

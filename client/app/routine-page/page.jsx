@@ -63,7 +63,7 @@ export default function RoutinePage() {
   console.log(formattedDate); // Output: e.g., 20/02/2024
 
   return (
-    <div className="routine">
+    <div className="routine max-w-screen-lg">
       <h4 className="bg-rose-900 px-8 text-4xl text-white font-medium py-2 jokename">
         Prime University{" "}
       </h4>
@@ -81,7 +81,7 @@ export default function RoutinePage() {
       </h4>
 
       <div className="anotherOne flex flex-col md:flex-row gap-8 mt-2 w-full">
-        <div className="order-2 md:order-1 table text-white text-[20px] font-jost w-full max-w-[1000px]">
+        <div className="order-2 md:order-1 table text-white text-[20px] font-jost w-full ">
           <table className={`${theme[themeClassInd].table} w-full`}>
             {routine?.map((elm, row) => {
               if (elm.classes.length > 0) {
