@@ -113,6 +113,7 @@ let initRoutine = [
 const page = memo(() => {
   const router = useRouter();
   const [imgsrc, setImgsrc] = useState("");
+  const [downloadLoading, setDownloadLoading] = useState(false);
   const rootRef = useRef(null);
   const rootdayref = useRef(null);
   const dayref = useRef(null);
@@ -440,6 +441,7 @@ const page = memo(() => {
 
   async function handleDownload() {
     const id = localStorage.getItem("email");
+    setDownloadLoading(true);
     await axios
       .post(
         `${process.env.NEXT_PUBLIC_BACKEND}/user/download`,
@@ -468,6 +470,7 @@ const page = memo(() => {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+        setDownloadLoading(false);
         console.log("🚀 ~ .then ~ screenshot:", screenshot);
       })
       .catch((res) => {
@@ -576,7 +579,7 @@ const page = memo(() => {
           <br />
           <div className=" ">
             <br />
-            <p>
+            <p className="flex items-center gap-8">
               <button
                 hidden={needDataChange}
                 onClick={handleSubmit}
@@ -622,10 +625,16 @@ const page = memo(() => {
                 Move Right
               </button>
               <button
+                disabled={downloadLoading}
                 onClick={handleDownload}
-                className="bg-white text-black px-4 py-2 font-medium text-sm mr-2 rounded-lg"
+                className="bg-white text-black px-4 py-2 font-medium text-sm mr-2 rounded-lg flex items-center"
               >
-                Download
+                Download{downloadLoading && (
+                  <span className="">ing</span>
+                )}
+                {downloadLoading && (
+                  <span className="ml-2 inline-block animate-spin h-5 w-5 rounded-full border-2 border-r-0 border-rose-500"></span>
+                )}{" "}
               </button>
             </p>
           </div>
