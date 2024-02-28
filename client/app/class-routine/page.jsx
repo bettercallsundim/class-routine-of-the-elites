@@ -447,6 +447,7 @@ const page = memo(() => {
         },
         {
           responseType: "arraybuffer",
+          timeout:60000
         }
       )
       .then((res) => {

@@ -31,11 +31,8 @@ export default function RoutinePage() {
     }
   }, []);
   useEffect(() => {
-
-      fetchUser();
-
+    fetchUser();
   }, [email]);
-
 
   async function fetchUser() {
     await axios
@@ -84,7 +81,7 @@ export default function RoutinePage() {
       </h4>
 
       <div className="anotherOne flex flex-col md:flex-row gap-8 mt-2 w-full">
-        <div className="order-2 md:order-1 table text-white text-[20px] font-jost w-full">
+        <div className="order-2 md:order-1 table text-white text-[20px] font-jost w-full max-w-[1000px]">
           <table className={`${theme[themeClassInd].table} w-full`}>
             {routine?.map((elm, row) => {
               if (elm.classes.length > 0) {
