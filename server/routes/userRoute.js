@@ -131,7 +131,7 @@ app.post("/download", async (req, res) => {
       localStorage.clear();
       localStorage.setItem("email", token);
     }, email);
-    await delay(1500);
+    // await delay(1500);
 
     await page.goto(`${process.env.FRONTEND}/routine-page`, {
       waitUntil: "load",

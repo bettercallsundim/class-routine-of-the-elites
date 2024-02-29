@@ -1,6 +1,7 @@
 "use client";
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 
+import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 import { store } from "../redux/store";
 
@@ -10,5 +11,9 @@ export default function ReduxProvider({ children }) {
     cache: new InMemoryCache(),
   });
 
-  return <Provider store={store}>{children}</Provider>;
+  return (
+    <Provider store={store}>
+      {children}
+    </Provider>
+  );
 }

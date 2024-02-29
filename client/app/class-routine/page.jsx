@@ -2,6 +2,7 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { memo, useEffect, useRef, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import Routine from "../components/Routine";
 const routine = [
@@ -114,6 +115,7 @@ const page = memo(() => {
   const router = useRouter();
   const [imgsrc, setImgsrc] = useState("");
   const [downloadLoading, setDownloadLoading] = useState(false);
+  const [routineLoading, setRoutineLoading] = useState(false);
   const rootRef = useRef(null);
   const rootdayref = useRef(null);
   const dayref = useRef(null);
@@ -426,11 +428,13 @@ const page = memo(() => {
       });
   }
   async function fetchUser() {
+    setRoutineLoading(true);
     await axios
       .get(`${process.env.NEXT_PUBLIC_BACKEND}/user/${email}`)
       .then((res) => {
         console.log(res, "user fetched");
         setR(res.data.user.routine);
+        setRoutineLoading(false);
         // Create a browser instance
       })
       .catch((res) => {
@@ -466,7 +470,7 @@ const page = memo(() => {
         const screenshot = arrayBufferToBase64(res.data);
         const link = document.createElement("a");
         link.href = `data:image/png;base64,${screenshot}`;
-        link.download = "screenshot.png";
+        link.download = "Routine.png";
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -495,6 +499,8 @@ const page = memo(() => {
 
   return (
     <div className="rootInput">
+      <Toaster position="top-right" reverseOrder={false} />
+
       <div className=" bg-[rgba(0,0,0,0.9)] text-white px-8 py-4">
         <div className="py-4">
           <div className="flex items-center gap-4 mb-6">
@@ -626,12 +632,21 @@ const page = memo(() => {
               </button>
               <button
                 disabled={downloadLoading}
-                onClick={handleDownload}
+                onClick={() => {
+                  const notify = () =>
+                    toast.success(
+                      "Routine is cooking. It can take up to 1 min. to be served. Wait...",
+                      {
+                        duration: 5000,
+                      }
+                    );
+
+                  notify();
+                  handleDownload();
+                }}
                 className="bg-white text-black px-4 py-2 font-medium text-sm mr-2 rounded-lg flex items-center"
               >
-                Download{downloadLoading && (
-                  <span className="">ing</span>
-                )}
+                Download{downloadLoading && <span className="">ing</span>}
                 {downloadLoading && (
                   <span className="ml-2 inline-block animate-spin h-5 w-5 rounded-full border-2 border-r-0 border-rose-500"></span>
                 )}{" "}
@@ -658,7 +673,9 @@ const page = memo(() => {
             currentColumn={indexes}
             setInputNull={setInputNull}
           />
-          {imgsrc && <img src={imgsrc} alt="" />}
+          {routineLoading && (
+            <span className="ml-2 inline-block animate-spin h-5 w-5 rounded-full border-2 border-r-0 border-rose-500"></span>
+          )}{" "}
         </div>
       </div>
     </div>
