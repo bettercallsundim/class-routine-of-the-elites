@@ -589,44 +589,44 @@ const page = memo(() => {
               <button
                 hidden={needDataChange}
                 onClick={handleSubmit}
-                className="bg-white text-black px-4 py-2 font-medium text-sm mr-2 rounded-lg"
+                className="bg-white text-black px-4 py-2 font-medium text-sm mr-2 rounded-lg hover:scale-[1.03] duration-200"
               >
                 Add class
               </button>
               <button
                 hidden={!needDataChange}
                 onClick={handleUpdate}
-                className="bg-white text-black px-4 py-2 font-medium text-sm mr-2 rounded-lg"
+                className="bg-white text-black px-4 py-2 font-medium text-sm mr-2 rounded-lg hover:scale-[1.03] duration-200"
               >
                 Update class
               </button>
               <button
                 onClick={handleDelete}
-                className="bg-white text-black px-4 py-2 font-medium text-sm mr-2 rounded-lg"
+                className="bg-white text-black px-4 py-2 font-medium text-sm mr-2 rounded-lg hover:scale-[1.03] duration-200"
               >
                 Delete class
               </button>
               <button
                 onClick={handleSaveRoutine}
-                className="bg-white text-black px-4 py-2 font-medium text-sm mr-2 rounded-lg"
+                className="bg-white text-black px-4 py-2 font-medium text-sm mr-2 rounded-lg hover:scale-[1.03] duration-200"
               >
                 Save Routine
               </button>
               <button
                 onClick={changeTheme}
-                className="bg-white text-black px-4 py-2 font-medium text-sm mr-2 rounded-lg"
+                className="bg-white text-black px-4 py-2 font-medium text-sm mr-2 rounded-lg hover:scale-[1.03] duration-200"
               >
                 Theme Toggle
               </button>
               <button
                 onClick={handleLeft}
-                className="bg-white text-black px-4 py-2 font-medium text-sm mr-2 rounded-lg"
+                className="bg-white text-black px-4 py-2 font-medium text-sm mr-2 rounded-lg hover:scale-[1.03] duration-200"
               >
                 Move Left
               </button>
               <button
                 onClick={handleRight}
-                className="bg-white text-black px-4 py-2 font-medium text-sm mr-2 rounded-lg"
+                className="bg-white text-black px-4 py-2 font-medium text-sm mr-2 rounded-lg hover:scale-[1.03] duration-200"
               >
                 Move Right
               </button>
@@ -644,7 +644,7 @@ const page = memo(() => {
                   notify();
                   handleDownload();
                 }}
-                className="bg-white text-black px-4 py-2 font-medium text-sm mr-2 rounded-lg flex items-center"
+                className="bg-white text-black px-4 py-2 font-medium text-sm mr-2 rounded-lg flex items-center hover:scale-[1.03] duration-200"
               >
                 Download{downloadLoading && <span className="">ing</span>}
                 {downloadLoading && (
