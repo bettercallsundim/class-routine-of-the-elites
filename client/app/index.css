@@ -174,11 +174,11 @@ td {
 }
 .sub1 {
   background: linear-gradient(to right, #ae1064, #ff0084);
-  color: white;
+  color: white !important;
 }
 .sub2 {
   background: white;
-  color: black;
+  color: black !important;
 }
 td {
   padding: 15px;
