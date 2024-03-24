@@ -92,9 +92,10 @@ app.get("/:email", async (req, res) => {
 });
 //download a user
 app.post("/download", async (req, res) => {
-  const { email } = req.body;
+  const { email, uniName, semiName, depName, batch, row, col, themeClassInd } =
+    req.body;
   try {
-    console.log("email", email);
+    console.log("req.body", req.body);
     // const browser = await puppeteer.launch({ headless: false });
     // const browser = await startBrowser();
     // let chrome = {};
@@ -125,12 +126,28 @@ app.post("/download", async (req, res) => {
       ignoreHTTPSErrors: true,
     });
     const page = await browser.newPage();
-    await page.setViewport({ width: 1024, height: 800 });
+    await page.setViewport({
+      width: Math.max(1080, 286 * col + 155),
+      height: 125 * row + 70 + 70,
+    });
 
-    await page.evaluateOnNewDocument((token) => {
-      localStorage.clear();
-      localStorage.setItem("email", token);
-    }, email);
+    await page.evaluateOnNewDocument(
+      (token, uniName, semiName, depName, batch, themeClassInd) => {
+        localStorage.clear();
+        localStorage.setItem("email", token);
+        localStorage.setItem("uniName", uniName);
+        localStorage.setItem("semiName", semiName);
+        localStorage.setItem("depName", depName);
+        localStorage.setItem("batch", batch);
+        localStorage.setItem("themeClassInd", themeClassInd);
+      },
+      email,
+      uniName,
+      semiName,
+      depName,
+      batch,
+      themeClassInd
+    );
     // await delay(1500);
 
     await page.goto(`${process.env.FRONTEND}/routine-page`, {

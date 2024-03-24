@@ -15,7 +15,6 @@ const theme = [
     table: "table2",
   },
 ];
-let themeClassInd = 1;
 import "@/app/globals.css";
 import "@/app/index.css";
 import axios from "axios";
@@ -23,10 +22,26 @@ import { useEffect, useState } from "react";
 export default function RoutinePage() {
   const [routine, setRoutine] = useState([]);
   const [email, setEmail] = useState(null);
+  const [uniName, setUniName] = useState("");
+  const [semiName, setSemiName] = useState("");
+  const [depName, setDepName] = useState("");
+  const [themeClassInd, setThemeClassInd] = useState(0);
+
+  const [batch, setBatch] = useState("");
   useEffect(() => {
     const emails = localStorage.getItem("email");
+    const uniNames = localStorage.getItem("uniName");
+    const depNames = localStorage.getItem("depName");
+    const semiNames = localStorage.getItem("semiName");
+    const batchs = localStorage.getItem("batch");
+    const themeClassInds = localStorage.getItem("themeClassInd");
     if (emails) {
       setEmail(emails);
+      setUniName(uniNames);
+      setSemiName(semiNames);
+      setDepName(depNames);
+      setBatch(batchs);
+      setThemeClassInd(themeClassInds || 0);
       fetchUser();
     }
   }, []);
@@ -63,25 +78,25 @@ export default function RoutinePage() {
   console.log(formattedDate); // Output: e.g., 20/02/2024
 
   return (
-    <div className="routine max-w-screen-lg">
+    <div className="routine max-w-screen-xl">
       <h4 className="bg-rose-900 px-8 text-4xl text-white font-medium py-2 jokename">
-        Prime University{" "}
+        {uniName}
       </h4>
       <h4 className="bg-white px-8 text-xl text-black font-medium py-2 tags">
-        Routine Of &nbsp; CSE / 61'st (D) / Group - B
-        <p className="mt-2">
-          <span className="ml-[0rem] font-bold text-sm mr-4 text-rose-500">
-            #spring2024
-          </span>
-          <span className="font-bold text-sm mr-4  text-sky-500">#cse61D</span>
-          <span className="text-orange-400 font-bold text-sm mr-4 ">
-            Updated : {formattedDate}
-          </span>
-        </p>
+        <span className="font-bold text-sm mr-4  text-sky-600">
+          # {depName}
+        </span>{" "}
+        <span className="font-bold text-sm mr-4  text-gray-700"># {batch}</span>{" "}
+        <span className="ml-[0rem] font-bold text-sm mr-4 text-rose-500">
+          # {semiName}
+        </span>
+        <span className="text-orange-400 font-bold text-sm mr-4 ">
+          Updated : {formattedDate}
+        </span>
       </h4>
 
       <div className="anotherOne flex flex-col md:flex-row gap-8 mt-2 w-full">
-        <div className="order-2 md:order-1 table text-white text-[20px] font-jost w-full ">
+        <div className="order-2 md:order-1 table text-white text-[20px] font-jost  ">
           <table className={`${theme[themeClassInd].table} w-full`}>
             {routine?.map((elm, row) => {
               if (elm.classes.length > 0) {
@@ -91,7 +106,7 @@ export default function RoutinePage() {
 
                     <th className="pl-1 md:p-2">{elm?.day}</th>
                     {elm?.classes?.map((classData, col) => (
-                      <td>
+                      <td className="#max-w-[286px]">
                         <p
                           className={`t bg-lime-600 px-2 rounded-md md:rounded-full my-2   font-semibold text-center bxsh ${theme[themeClassInd].time}`}
                         >
@@ -128,6 +143,9 @@ export default function RoutinePage() {
           </table>
           <hr />
         </div>
+      </div>
+      <div className="h-[50px] inline-block p-2  rounded-lg mt-[20px] border-2 border-gray-500">
+        🚀 Fueled By : National Routine Sighting Committee 🌙
       </div>
     </div>
   );

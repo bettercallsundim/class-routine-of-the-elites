@@ -114,6 +114,10 @@ let initRoutine = [
 const page = memo(() => {
   const router = useRouter();
   const [imgsrc, setImgsrc] = useState("");
+  const [uniName, setUniName] = useState("");
+  const [semiName, setSemiName] = useState("");
+  const [depName, setDepName] = useState("");
+  const [batch, setBatch] = useState("");
   const [downloadLoading, setDownloadLoading] = useState(false);
   const [routineLoading, setRoutineLoading] = useState(false);
   const rootRef = useRef(null);
@@ -426,9 +430,12 @@ const page = memo(() => {
       .catch((res) => {
         console.log("failed");
       });
+    localStorage.setItem("uniName", uniName);
+    localStorage.setItem("semiName", semiName);
+    localStorage.setItem("depName", depName);
+    localStorage.setItem("batch", batch);
   }
   async function fetchUser() {
-    setRoutineLoading(true);
     await axios
       .get(`${process.env.NEXT_PUBLIC_BACKEND}/user/${email}`)
       .then((res) => {
@@ -439,18 +446,32 @@ const page = memo(() => {
       })
       .catch((res) => {
         console.log("failed");
+        setRoutineLoading(false);
         fetchUser();
       });
+    // setRoutineLoading(false);
   }
 
   async function handleDownload() {
     const id = localStorage.getItem("email");
     setDownloadLoading(true);
+    const colLength = Math.max(...r.map((day) => day.classes.length));
+    const rowLength = r
+      .map((day) => day.classes.length)
+      .filter((count) => count > 0).length;
+
     await axios
       .post(
         `${process.env.NEXT_PUBLIC_BACKEND}/user/download`,
         {
           email,
+          row: rowLength,
+          col: colLength,
+          uniName,
+          semiName,
+          depName,
+          batch,
+          themeClassInd,
         },
         {
           responseType: "arraybuffer",
@@ -483,7 +504,24 @@ const page = memo(() => {
       });
   }
   useEffect(() => {
+    setRoutineLoading(true);
     fetchUser();
+    const uniNames = localStorage.getItem("uniName");
+    const semiNames = localStorage.getItem("semiName");
+    const depNames = localStorage.getItem("depName");
+    const batchs = localStorage.getItem("batch");
+    if (uniNames) {
+      setUniName(uniNames);
+    }
+    if (semiNames) {
+      setSemiName(semiNames);
+    }
+    if (depNames) {
+      setDepName(depNames);
+    }
+    if (batchs) {
+      setBatch(batchs);
+    }
   }, []);
   useEffect(() => {
     let emailGot = localStorage.getItem("email");
@@ -494,6 +532,7 @@ const page = memo(() => {
     }
   }, []);
   useEffect(() => {
+    setRoutineLoading(true);
     fetchUser();
   }, [email]);
 
@@ -503,7 +542,53 @@ const page = memo(() => {
 
       <div className=" bg-[rgba(0,0,0,0.9)] text-white px-8 py-4">
         <div className="py-4">
-          <div className="flex items-center gap-4 mb-6">
+          <div className="flex  items-center mb-6">
+            <p className="w-[30%] mr-4">
+              <input
+                type="text"
+                onChange={(e) => setUniName(e.target.value)}
+                className="text-black w-full"
+                name=""
+                id=""
+                value={uniName}
+                placeholder="University Name"
+              />
+            </p>
+            <p className="w-[20%] mr-4">
+              <input
+                type="text"
+                onChange={(e) => setSemiName(e.target.value)}
+                className="text-black w-full"
+                name=""
+                id=""
+                value={semiName}
+                placeholder="Semester"
+              />
+            </p>
+            <p className="w-[20%] mr-4">
+              <input
+                type="text"
+                onChange={(e) => setDepName(e.target.value)}
+                className="text-black w-full"
+                name=""
+                id=""
+                value={depName}
+                placeholder="Department"
+              />
+            </p>
+            <p className="w-[10%]">
+              <input
+                type="text"
+                onChange={(e) => setBatch(e.target.value)}
+                className="text-black w-full"
+                name=""
+                id=""
+                value={batch}
+                placeholder="Batch"
+              />
+            </p>
+          </div>
+          <div className="flex items-center gap-4 ">
             <p>
               Day : &nbsp;
               <select
@@ -548,7 +633,7 @@ const page = memo(() => {
             </p>
           </div>
 
-          <div className="flex items-center gap-4 ">
+          <div className="flex items-center gap-4 mt-6">
             <p>
               Time :&nbsp;
               <input
@@ -655,7 +740,8 @@ const page = memo(() => {
           </div>
           <div>
             <p className="text-gray-300 mt-4">
-              Tip : Click on any cell to edit individually.
+              Tip : Click on any cell to edit individually && Click 'Save'
+              before clicking 'Download'.
             </p>
           </div>
         </div>
