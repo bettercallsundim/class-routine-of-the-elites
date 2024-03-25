@@ -1,23 +1,16 @@
-# Food-O-graphy
+# Class Routine Of The Elites (CROTE)
 
-Democratic social network platform for foodies.
+An aesthetic & colorful class routine generator.
 
 ## Features
 
-- Light/dark mode toggle (Persisted with localstorage)
-- Authentication handled with react-oauth/google.
-- JWT token based auth with the use of localstorage for persisting credentials until JWT token is expired.
-- Post statuses with photo. [hosted in cloudinary]
-- Like / Unlike posts.
-- Edit/Delete posts.
-- Comment on posts.
-- Separate page for own posts and public posts.
-- Infinite scrolling on Global Feed page (as there can be huge number of post in news feed)
-- [ Food specific features are WIP ]
+- Each cell can be edited individually.
+- 2 themes made available.
+- Changes are saved in mongoDB database.
+- Download the routine as png.
 
 ## Tech Stack
 
-**Client:** Next.js ( App Router ), Redux Toolkit, Apollo Client, TailwindCSS, shadcn
+**Client:** Next.js ( App Router ), shadcn
 
-**Server:** mongoDB, Express.js, GraphQL
-# class-routine-of-the-elites
+**Server:** mongoDB, Express.js, puppeteer
