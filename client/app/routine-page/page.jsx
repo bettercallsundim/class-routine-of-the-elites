@@ -93,7 +93,7 @@ export default function RoutinePage() {
         <span className="text-orange-400 font-bold text-sm mr-4 ">
           Updated : {formattedDate}
         </span>
-        <span className="absolute right-0">
+        <span className="absolute right-0 -top-0 scale-[0.8]">
           <img
             className="h-[50px] object-fit ml-auto"
             src="./logo.png"
