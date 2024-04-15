@@ -82,7 +82,7 @@ export default function RoutinePage() {
       <h4 className="bg-rose-900 px-8 text-4xl text-white font-medium py-2 jokename">
         {uniName}
       </h4>
-      <h4 className="bg-white px-8 text-xl text-black font-medium py-2 tags">
+      <h4 className="bg-white px-8 text-xl text-black font-medium py-2 tags relative">
         <span className="font-bold text-sm mr-4  text-sky-600">
           # {depName}
         </span>{" "}
@@ -92,6 +92,13 @@ export default function RoutinePage() {
         </span>
         <span className="text-orange-400 font-bold text-sm mr-4 ">
           Updated : {formattedDate}
+        </span>
+        <span className="absolute right-0">
+          <img
+            className="h-[50px] object-fit ml-auto"
+            src="./logo.png"
+            alt=""
+          />
         </span>
       </h4>
 
@@ -144,9 +151,9 @@ export default function RoutinePage() {
           <hr />
         </div>
       </div>
-      <div className="h-[50px] inline-block p-2  rounded-lg mt-[20px] border-2 border-gray-500">
-        🚀 Fueled By : National Routine Sighting Committee 🌙
-      </div>
+      {/* <div className="h-[50px] w-full  p-2  rounded-lg mt-[20px] ">
+        <img className="h-[50px] object-fit ml-auto" src="./logo.png" alt="" />
+      </div> */}
     </div>
   );
 }
