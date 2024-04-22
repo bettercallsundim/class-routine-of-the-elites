@@ -165,6 +165,7 @@ const page = memo(() => {
 
     const convert12hTo24h = (timeStr) => {
       const [time, modifier] = timeStr.split(" ");
+      console.log(time, modifier, "time modifirer");
       let [hours, minutes] = time.split(":");
       if (hours === "12") {
         hours = "00";
@@ -174,18 +175,49 @@ const page = memo(() => {
       }
       return `${hours}:${minutes}`;
     };
+    // const convert12hTo24h = (timeStr) => {
+    //   const [time, modifier] = timeStr.split(" ");
+    //   let [hours, minutes] = time.split(":");
+
+    //   // Convert hours and minutes to integers
+    //   hours = parseInt(hours, 10);
+    //   minutes = parseInt(minutes, 10);
+
+    //   if (modifier === "PM" && hours !== 12) {
+    //     // Add 12 to hours for PM times (except 12:00 PM)
+    //     hours = (hours + 12) % 24;
+    //   } else if (modifier === "AM" && hours === 12) {
+    //     // Special case: 12:00 AM should be converted to 00:00
+    //     hours = 0;
+    //   }
+
+    //   // Pad hours and minutes with leading zeros if necessary
+    //   hours = hours.toString().padStart(2, "0");
+    //   minutes = minutes.toString().padStart(2, "0");
+
+    //   return `${hours}:${minutes}`;
+    // };
     console.log(
       formatTime(classData.time[0].split(" ")[0]) +
         classData.time[0].split(" ")[1],
       "hihhh"
     );
+    console.log(
+      convert12hTo24h(
+        formatTime(classData.time[0].split(" ")[0]),
+        classData.time[0].split(" ")[1]
+      ),
+      "what the"
+    );
     starttimeref.current.value = convert12hTo24h(
-      formatTime(classData.time[0].split(" ")[0]),
-      classData.time[0].split(" ")[1]
+      formatTime(classData.time[0].split(" ")[0]) +
+        " " +
+        classData.time[0].split(" ")[1]
     );
     endtimeref.current.value = convert12hTo24h(
-      formatTime(classData.time[1].split(" ")[0]),
-      classData.time[1].split(" ")[1]
+      formatTime(classData.time[1].split(" ")[0]) +
+        " " +
+        classData.time[1].split(" ")[1]
     );
     // const roottimeref_options = roottimeref.current.options;
     // for (let i = 0; i < roottimeref_options.length; i++) {
@@ -425,6 +457,12 @@ const page = memo(() => {
         routine: r,
       })
       .then((res) => {
+        const notify = () =>
+          toast.success("Routine saved to database.", {
+            duration: 2000,
+          });
+
+        notify();
         console.log(res, "success");
       })
       .catch((res) => {

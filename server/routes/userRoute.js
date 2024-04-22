@@ -128,7 +128,7 @@ app.post("/download", async (req, res) => {
     const page = await browser.newPage();
     await page.setViewport({
       width: Math.max(1080, 286 * col + 155),
-      height: 125 * row + 70 + 70,
+      height: 125 * row + 70,
     });
 
     await page.evaluateOnNewDocument(
