@@ -60,8 +60,8 @@ export default function page() {
         )}
         <div>{!email && <Login />}</div>
       </div>
-      <span className="fixed bottom-8 right-8 font-medium bg-slate-950 text-white opacity-90 p-2 rounded-md">
-      আয়োজনে : জাতীয় রুটিন দেখা কমিটি 🌙{" "}
+      <span className="fixed bottom-8 right-8 font-medium #bg-slate-950 #text-white opacity-90 p-2 rounded-md">
+        © National Routine Sighting Committee 🌙{" "}
       </span>
     </div>
   );
