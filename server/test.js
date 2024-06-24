@@ -16,9 +16,9 @@ app.use(
 app.use(express.json());
 // Configure Cloudinary
 cloudinary.v2.config({
-  cloud_name: "dogwysjys",
-  api_key: "453361171546649",
-  api_secret: "d4KUlHsYsHM6E-Vz1SzHrDFM6yE",
+  cloud_name: "aaaa",
+  api_key: "aaaa",
+  api_secret: "aaaa",
 });
 
 const uri =
