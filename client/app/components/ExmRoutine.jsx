@@ -1,8 +1,9 @@
 "use client";
 import { DateTime } from "luxon";
+import { useEffect, useState } from "react";
 
-export default function ExmRoutine({ routine, handleDataChange }) {
-  // const [routine, setRoutine] = useState([]);
+export default function ExmRoutine({ routine, handleDataChange, setIndexes }) {
+  const [tempRoutine, setTempRoutine] = useState(routine || []);
   // const routine = [
   //   {
   //     day: "Saturday",
@@ -38,6 +39,18 @@ export default function ExmRoutine({ routine, handleDataChange }) {
   //     .then((res) => res.json())
   //     .then((res) => setRoutine(res[2].routine));
   // }, []);
+  useEffect(() => {
+    function sortDate() {
+      let sortedRoutine = [...routine];
+      sortedRoutine.sort((a, b) => {
+        Math.floor(new Date(a.date).getTime() / 1000) -
+          Math.floor(new Date(b.date).getTime() / 1000);
+      });
+      setTempRoutine(sortedRoutine);
+      return;
+    }
+    sortDate();
+  }, [routine]);
   console.log(routine, "routine");
   return (
     <div className="routine">
@@ -64,11 +77,11 @@ export default function ExmRoutine({ routine, handleDataChange }) {
               <td>Date</td>
               <td>Exams</td>
             </tr> */}
-            {routine?.map((elm, ind1) => (
+            {tempRoutine?.map((elm, ind1) => (
               <tr className="py-2">
                 {elm?.exams?.length > 0 && (
                   <td className="exmday">
-                    {elm?.date} <br/>
+                    {elm?.date} <br />
                     {DateTime.fromISO(elm?.date)?.weekdayLong}
                   </td>
                 )}
@@ -76,12 +89,15 @@ export default function ExmRoutine({ routine, handleDataChange }) {
                 {elm?.exams?.map((exm, ind2) => {
                   return (
                     <td
-                      onClick={() => handleDataChange(exm, ind1, ind2)}
+                      onClick={() => {
+                        handleDataChange(exm, ind1, ind2);
+                        setIndexes({ row: ind1, col: ind2, exmData: elm });
+                      }}
                       className="py-2    px-2 basis-[100%] font-bold exmday"
                     >
                       <p>
-                        {exm?.date} {exm?.room} {exm?.time[0]} {exm?.time[1]}{" "}
-                        {exm?.subName} {exm?.tname}
+                        {exm?.room} {exm?.time[0]} {exm?.time[1]} {exm?.subName}{" "}
+                        {exm?.tname}
                       </p>
                     </td>
                   );

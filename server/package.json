@@ -13,7 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@sparticuz/chromium": "^121.0.0",
-    "bcrypt": "^5.1.0",
+    "bcrypt": "^5.1.1",
     "chrome-aws-lambda": "^10.1.0",
     "cloudinary": "^1.37.0",
     "cors": "^2.8.5",

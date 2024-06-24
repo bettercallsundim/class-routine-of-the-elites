@@ -304,7 +304,6 @@ const page = memo(() => {
           // });
           let newR = r;
           newR[i].exams.push({
-            date: currentState.date,
             tname: currentState.tname,
             subName: currentState.subName,
             time: currentState.time,
@@ -371,23 +370,23 @@ const page = memo(() => {
     setInputNull();
     setNeedDataChange(0);
   }
-  function handleLeft() {
+  function handleTop() {
     if (!indexes) return;
+    console.log("🚀 ~ handleTop ~ indexes:", indexes);
 
-    let { row, col, examData } = indexes;
-    if (col != 0) {
+    let { row, examData } = indexes;
+    if (row > 0) {
       let newR = r;
-      console.log("hi", row, col);
-      let temp = newR[row].exams[col];
-      newR[row].exams[col] = newR[row].exams[col - 1];
-      newR[row].exams[col - 1] = temp;
+      let temp = newR[row - 1];
+      newR[row - 1] = newR[row];
+      newR[row] = temp;
       setR(newR);
-      handleDataChange(examData, row, col);
+      // handleDataChange(examData, row, col);
       setInputNull();
       setNeedDataChange(0);
     }
   }
-  function handleRight() {
+  function handleDown() {
     if (!indexes) return;
     let { row, col, examData } = indexes;
     if (col != r[row].exams.length - 1) {
@@ -473,6 +472,7 @@ const page = memo(() => {
       setEmail(emailGot);
     }
   }, []);
+  
   // useEffect(() => {
   //   fetchUser();
   // }, [email]);
@@ -489,6 +489,7 @@ const page = memo(() => {
             <p>
               Date :
               <input
+                // disabled={!!indexes?.row}
                 ref={rootdateref}
                 onChange={handleDate}
                 className="text-black"
@@ -591,11 +592,11 @@ const page = memo(() => {
               <button onClick={changeTheme} className="bg-rose-400 rounded p-2">
                 Theme Toggle
               </button>
-              <button onClick={handleLeft} className="bg-rose-400 rounded p-2">
-                Move Left
+              <button onClick={handleTop} className="bg-rose-400 rounded p-2">
+                Move Top
               </button>
-              <button onClick={handleRight} className="bg-rose-400 rounded p-2">
-                Move Right
+              <button onClick={handleDown} className="bg-rose-400 rounded p-2">
+                Move Down
               </button>
               <button
                 onClick={handleDownload}
@@ -608,6 +609,7 @@ const page = memo(() => {
 
           <ExmRoutine
             indexes={indexes}
+            setIndexes={setIndexes}
             handleDataChange={handleDataChange}
             routine={r}
             themeClassInd={themeClassInd}
